@@ -1,0 +1,261 @@
+/* Latin Theme – Full-Page Layout, Slim Grid & Side-by-Side Clues */
+
+/* 1) Import classical serif font */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+/* 2) Body & Background */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cinzel', serif;
+  background-color: #f5e3b3;
+  background-image: url('parchment_tile.png');
+  background-repeat: repeat;
+  color: #3b2f2f;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+/* 3) zoë Header */
+.zoe-header {
+  text-align: center;
+  margin: 16px 0;
+}
+.zoe-header img {
+  max-height: 80px;
+  opacity: 0.85;
+}
+
+/* 4) Title */
+h1 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5a3e36;
+  text-shadow: 1px 1px 0 #fff8e1;
+}
+h2 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5a3e36;
+  text-shadow: 1px 1px 0 #fff8e1;
+}
+h3 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5a3e36;
+  text-shadow: 1px 1px 0 #fff8e1;
+}
+
+/* 5) Main Flex Container: Grid + Clues, now centered */
+#main-container {
+  display: flex;
+  align-items: flex-start;      /* grid sets the height, clues follow */
+  justify-content: center;      /* center both grid & clues together */
+  margin: 0 auto;               /* auto horizontal margins */
+  padding: 0 16px;              /* small side padding */
+  box-sizing: border-box;
+  /* no width:100% so it shrinks to fit content */
+  overflow: hidden;
+}
+
+/* 6) Grid Container – only as big as its content */
+#grid-container {
+  flex: none;                   /* don’t stretch vertically or horizontally */
+  padding: 12px;
+  margin: 0 16px;               /* gap to clues */
+  box-sizing: content-box;
+  background: #fbf3e0;
+  border: 6px solid transparent;
+  border-image: url('mosaic-border.png') 20 round;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: auto;               /* scroll if crossword is tall */
+}
+#grid-container::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 150px; height: 150px;
+  background: url('columns-watermark.png') no-repeat center;
+  background-size: contain;
+  opacity: 0.1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 7) Crossword Table + Cells */
+table.crossword {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+table.crossword td {
+  width: 36px;
+  height: 36px;
+  border: 3px solid transparent;
+  border-image: url('mosaic-cell-border.png') 3 round;
+  background: #fffdf5 url('marble-texture.png') center/cover;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1),
+              0 1px 2px rgba(0,0,0,0.1);
+  position: relative;
+  transition: background-color 0.2s;
+}
+table.crossword td.black {
+  background: #3b2f2f;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+table.crossword td.highlight {
+  background-color: rgba(176,141,87,0.4) !important;
+}
+
+/* Cell numbering */
+.cell-number {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #61503b;
+}
+
+/* Inputs */
+table.crossword input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3b2f2f;
+  text-transform: uppercase;
+  outline: none;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6),
+               0 -1px 0 rgba(0,0,0,0.2);
+}
+table.crossword input:focus {
+  border: 2px solid #9c6b28;
+  border-radius: 4px;
+}
+
+/* Correct / Incorrect */
+.correct {
+  background-color: rgba(110,145,64,0.4) !important;
+}
+.incorrect {
+  background-color: rgba(165,60,60,0.4) !important;
+}
+
+/* 8) Clues Sidebar – now sizing to the grid, not the page */
+#clues-container {
+  flex: none;                   /* width set dynamically via JS */
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  overflow: visible;
+}
+/* 1) Ensure each clue-panel div fills the JS-set height */
+#clues-container > div {
+  height: 100%;        /* match the grid’s height */
+  box-sizing: border-box;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2) Make the actual <ul> scrollable */
+#clues-container ul {
+  flex: 1;             /* fill the panel vertically */
+  margin: 0;           /* reset default spacing */
+  padding-left: 0;
+  list-style: none;    /* no bullets */
+  overflow-y: auto;    /* enable vertical scroll */
+}
+
+#clues-container h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+  color: #5a3e36;
+  border-bottom: 2px solid #b08d57;
+  padding-bottom: 4px;
+}
+
+#clues-container li {
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+#clues-container li:hover {
+  color: #9c6b28;
+  text-decoration: underline;
+}
+/* Cross out completed clues */
+#clues-container li.clue-completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Highlight active clue */
+#clues-container li.clue-highlight {
+  background-color: rgba(156, 107, 40, 0.2);
+}
+
+
+
+/* 9) Buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  background: rgba(0,0,0,0.03);
+}
+.buttons button {
+  margin: 0 12px;
+  padding: 12px 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #9c6b28;
+  border: 2px solid #5a3e36;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.2s, transform 0.1s;
+}
+.buttons button:hover {
+  background-color: #8a5a1f;
+}
+.buttons button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* feedback message */
+.message {
+  margin: 12px 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+}
+.message.success {
+  color: #6e9140;   /* olive-green */
+}
+.message.error {
+  color: #a53c3c;   /* wine-red */
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crucigramma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- zoë header -->
+  <div class="zoe-header">
+    <img src="zoe-bennett.png" alt="zoë bennett">
+  </div>
+
+  <h1>Crucigramma</h1>
+  <h2>a.d. XIV Kal. Iul.</h2>
+  <h3>Felix dies natalis Gratia!</h3>
+
+  <!-- NEW: main flex container -->
+  <div id="main-container">
+    <div id="grid-container"></div>
+
+    <div id="clues-container">
+      <div id="across-clues">
+        <h2>Trans</h2>
+        <ul id="across-list"></ul>
+      </div>
+      <div id="down-clues">
+        <h2>Deorsum</h2>
+        <ul id="down-list"></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="buttons">
+    <button id="check-btn">Responsa Corrigere</button>
+    <!--<button id="clear-btn">Ludum Purgare</button>-->
+    <button id="mute-btn">🔊 Mute</button>
+    <!--<button id="fill-btn">Fill Answers</button>-->
+  </div>
+  <div id="message" class="message"></div>
+
+  <audio id="bg-music" src="background.mp3" loop autoplay></audio>
+
+  <script src="script.js"></script>
+  <script>
+    const music = document.getElementById('bg-music');
+    const muteBtn = document.getElementById('mute-btn');
+    music.volume = 0.4;
+    muteBtn.addEventListener('click', () => {
+      music.muted = !music.muted;
+      muteBtn.textContent = music.muted ? '🔇 Unmute' : '🔊 Mute';
+    });
+  </script>
+</body>
+</html>
